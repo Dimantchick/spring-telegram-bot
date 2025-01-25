@@ -1,6 +1,8 @@
 package com.github.dimantchick.telegrambot.components.impl;
 
 import com.github.dimantchick.telegrambot.components.AbstractLongPollingMultiThreadUpdateConsumer;
+import com.github.dimantchick.telegrambot.components.CallbackUpdateRegistry;
+import com.github.dimantchick.telegrambot.services.AgreementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,13 +18,25 @@ public class TelegramBotConsumer extends AbstractLongPollingMultiThreadUpdateCon
 
     private final CommandRegistry commandRegistry;
 
-    protected TelegramBotConsumer(@Qualifier("botExecutor") Executor executor, CommandRegistry commandRegistry) {
+    private final AgreementService agreementService;
+
+    private final CallbackUpdateRegistry callbackUpdateRegistry;
+
+    protected TelegramBotConsumer(@Qualifier("botExecutor") Executor executor,
+                                  CommandRegistry commandRegistry,
+                                  AgreementService agreementService, CallbackUpdateRegistry callbackUpdateRegistry) {
         super(executor);
         this.commandRegistry = commandRegistry;
+        this.agreementService = agreementService;
+        this.callbackUpdateRegistry = callbackUpdateRegistry;
     }
 
     @Override
     public void consume(Update update) {
+        if (!agreementService.checkAgreement(update)) {
+            agreementService.sendAgreement(update);
+            return;
+        }
         if (update.hasMessage() && !update.hasCallbackQuery()) {
             Message message = update.getMessage();
             if (message.isCommand() && !filter(message)) {
@@ -34,6 +48,7 @@ public class TelegramBotConsumer extends AbstractLongPollingMultiThreadUpdateCon
             }
         } else if (update.hasCallbackQuery()) {
             processCallbackUpdate(update);
+            return;
         } else if (update.hasEditedMessage()) {
             // implement actions on user edit message, if you need
         }
@@ -46,7 +61,7 @@ public class TelegramBotConsumer extends AbstractLongPollingMultiThreadUpdateCon
     }
 
     public void processCallbackUpdate(Update update) {
-        log.info("Processing callback update {}", update);
+        callbackUpdateRegistry.processCallbackUpdate(update);
     }
 
     @Override

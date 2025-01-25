@@ -1,6 +1,6 @@
-package com.github.dimantchick.telegrambot.services.impl;
+package com.github.dimantchick.telegrambot.services.telegram.impl;
 
-import com.github.dimantchick.telegrambot.services.TelegramExecutorService;
+import com.github.dimantchick.telegrambot.services.telegram.TelegramExecutorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;

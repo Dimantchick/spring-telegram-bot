@@ -1,6 +1,6 @@
-package com.github.dimantchick.telegrambot.services.impl;
+package com.github.dimantchick.telegrambot.services.telegram.impl;
 
-import com.github.dimantchick.telegrambot.services.UpdateUtilsService;
+import com.github.dimantchick.telegrambot.services.telegram.UpdateUtilsService;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 

@@ -1,4 +1,4 @@
-package com.github.dimantchick.telegrambot.services;
+package com.github.dimantchick.telegrambot.services.telegram;
 
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;
 

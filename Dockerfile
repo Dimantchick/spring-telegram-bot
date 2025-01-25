@@ -7,7 +7,7 @@ WORKDIR /workspace
 COPY --chown=gradle:gradle ./src ./src
 COPY --chown=gradle:gradle build.gradle ./build.gradle
 COPY --chown=gradle:gradle settings.gradle ./settings.gradle
-RUN gradle clean build --no-daemon
+RUN gradle build
 
 # Extract jar
 FROM $BASE_IMAGE AS extract

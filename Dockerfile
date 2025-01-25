@@ -1,4 +1,4 @@
-ARG JAVA_VERSION
+ARG JAVA_VERSION=21
 ARG GRADLE_IMAGE=gradle:jdk${JAVA_VERSION}-alpine
 ARG BASE_IMAGE=ghcr.io/dimantchick/spring-base-image:$JAVA_VERSION
 # Build project
@@ -7,12 +7,12 @@ WORKDIR /workspace
 COPY --chown=gradle:gradle ./src ./src
 COPY --chown=gradle:gradle build.gradle ./build.gradle
 COPY --chown=gradle:gradle settings.gradle ./settings.gradle
-RUN gradle :clean :build --no-daemon
+RUN gradle clean build --no-daemon
 
 # Extract jar
 FROM $BASE_IMAGE AS extract
-ARG JAR_PATH
-COPY --from=build /workspace/$JAR_PATH ./app.jar
+ARG APP_NAME=application-1.0-SNAPSHOT
+COPY --from=build /workspace/build/libs/$APP_NAME.jar ./app.jar
 RUN java -Djarmode=tools -jar app.jar extract --layers --launcher
 
 # Build container image

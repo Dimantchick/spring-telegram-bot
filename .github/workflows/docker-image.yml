@@ -27,7 +27,7 @@ jobs:
         password: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_ID }} --build-arg JAVA_VERSION=21 --build-arg JAR_PATH=build/libs/spring-telegram-bot-1.0-SNAPSHOT.jar
+      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_ID }} --build-arg APP_NAME=spring-telegram-bot-1.0-SNAPSHOT
 
     - name: Push image to GitHub Container Registry
       run: docker push ${{ env.IMAGE_ID }}

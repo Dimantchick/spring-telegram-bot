@@ -9,6 +9,11 @@ Use example Docker-compose.yml
 1. Register bot, using BotFather https://t.me/BotFather
 2. Change set env var BOT_TOKEN `set BOT_TOKEN=<token_from_BotFather>`
 3. Run `docker-compose up`
+## Supported env variables
+- BOT_TOKEN - token from BotFather
+- BOT_NAME - name of your bot
+- ENABLE_LICENSE_AGREEMENT - enable only accepted licanse users can use bot - default true
+- LICENSE_VERSION - version of actual licanse (on update license increment it to reaccept for all users)
 ## Adding command handlers
 - Copy com/github/dimantchick/telegrambot/handlers/commands/StartCommand.java with your name in same package
 - Change COMMAND_IDENTIFIER to your command

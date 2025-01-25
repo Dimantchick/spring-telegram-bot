@@ -1,5 +1,6 @@
 package com.github.dimantchick.telegrambot.services.impl;
 
+import com.github.dimantchick.telegrambot.config.TelegramParams;
 import com.github.dimantchick.telegrambot.messages.agreement.AgreementMessage;
 import com.github.dimantchick.telegrambot.services.AgreementService;
 import com.github.dimantchick.telegrambot.services.BotUserService;
@@ -23,19 +24,27 @@ public class AgreementServiceImpl implements AgreementService {
 
     private final UpdateUtilsService updateUtilsService;
 
+    private final TelegramParams telegramParams;
+
     public AgreementServiceImpl(BotUserService botUserService,
                                 TelegramExecutorService telegramExecutorService,
                                 AgreementMessage agreementMessage,
-                                UpdateUtilsService updateUtilsService) {
+                                UpdateUtilsService updateUtilsService,
+                                TelegramParams telegramParams) {
         this.botUserService = botUserService;
         this.telegramExecutorService = telegramExecutorService;
         this.agreementMessage = agreementMessage;
         this.updateUtilsService = updateUtilsService;
+        this.telegramParams = telegramParams;
     }
 
     @Override
     public boolean checkAgreement(Update update) {
-        // Acgeement accepted or accept|decline callback
+        if (!telegramParams.isEnableLicenseAgreement()) {
+            // License agreement disabled
+            return true;
+        }
+        // Agreement accepted or accept|decline callback
         return botUserService.isAgreeLicense(updateUtilsService.getChatId(update))
                 || update.hasCallbackQuery()
                 && (DECLINE_AGREEMENT.equals(update.getCallbackQuery().getData())

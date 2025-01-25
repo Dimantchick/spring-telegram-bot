@@ -23,7 +23,10 @@ dependencies {
 
     implementation 'org.telegram:telegrambots-springboot-longpolling-starter:8.2.0'
     implementation 'org.telegram:telegrambots-client:8.2.0'
-    implementation 'org.telegram:telegrambots-extensions:8.2.0'
+    implementation ('org.telegram:telegrambots-extensions:8.2.0') {
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk18on' //vulnerability in 1.77 version
+        exclude group: 'org.bouncycastle', module: 'bcpkix-jdk18on' //vulnerability in 1.77 version
+    }
 
     runtimeOnly "com.h2database:h2"
 

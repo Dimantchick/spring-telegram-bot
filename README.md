@@ -4,6 +4,11 @@
 2. Change bot token application.yml or set env var BOT_TOKEN `set BOT_TOKEN=<token_from_BotFather>`
 3. Build `gradle clean build`
 4. Run application
+## Run in docker
+Use example Docker-compose.yml
+1. Register bot, using BotFather https://t.me/BotFather
+2. Change set env var BOT_TOKEN `set BOT_TOKEN=<token_from_BotFather>`
+3. Run `docker-compose up`
 ## Adding command handlers
 - Copy com/github/dimantchick/telegrambot/handlers/commands/StartCommand.java with your name in same package
 - Change COMMAND_IDENTIFIER to your command

@@ -16,5 +16,5 @@ public class BotUser {
 
     private String username;
 
-    private int acceptedAggrementVersion = 0;
+    private int acceptedAggrementVersion;
 }

@@ -4,8 +4,9 @@ com:
       telegrambot:
         token: ${BOT_TOKEN}
         pool-size: 10
-        bot-name: OzonMonitorPrice_bot
+        bot-name: ${BOT_NAME:Test_bot}
         # Override '/help' command description
-        #help-description: "shows all commands. Use /help [command] for more info about command"
+        help-description: "shows all commands. Use /help [command] for more info about command"
         # Ovveride '/help help' extended description
-        #help-extended-description: "This command displays all commands the bot has to offer.\n /help [command] can display deeper information"
+        help-extended-description: "This command displays all commands the bot has to offer.\n /help [command] can display deeper information"
+        agreement-version: 1

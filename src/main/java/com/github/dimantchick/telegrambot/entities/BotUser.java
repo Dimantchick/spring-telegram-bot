@@ -12,6 +12,8 @@ import lombok.*;
 @AllArgsConstructor
 public class BotUser {
     @Id
+    private Long id;
+
     private Long chatId;
 
     private String username;

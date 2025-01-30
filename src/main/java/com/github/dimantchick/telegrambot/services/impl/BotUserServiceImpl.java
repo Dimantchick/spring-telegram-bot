@@ -6,6 +6,7 @@ import com.github.dimantchick.telegrambot.repositories.BotUserRepository;
 import com.github.dimantchick.telegrambot.services.BotUserService;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.util.Optional;
 
@@ -23,10 +24,11 @@ public class BotUserServiceImpl implements BotUserService {
 
     @Override
     public void saveUserFromCallBack(CallbackQuery callbackQuery) {
-        String userName = callbackQuery.getFrom().getUserName();
+        User from = callbackQuery.getFrom();
         BotUser botUser = BotUser.builder()
+                .id(from.getId())
                 .chatId(callbackQuery.getMessage().getChatId())
-                .username(userName)
+                .username(from.getUserName())
                 .acceptedAggrementVersion(telegramParams.getAgreementVersion())
                 .build();
         save(botUser);

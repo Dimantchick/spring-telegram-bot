@@ -88,6 +88,8 @@ public class AgreementServiceImpl implements AgreementService {
 
     @Override
     public void sendAgreement(Update update) {
-        telegramExecutorService.execute(agreementMessage.getMessage(updateUtilsService.getChatId(update)));
+        // For text agreement use this
+        // telegramExecutorService.execute(agreementMessage.getMessage(updateUtilsService.getChatId(update)));
+        telegramExecutorService.execute(agreementMessage.getFileMessage(updateUtilsService.getChatId(update)));
     }
 }

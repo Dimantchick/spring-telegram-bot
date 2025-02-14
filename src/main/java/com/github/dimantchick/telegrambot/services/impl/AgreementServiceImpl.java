@@ -7,7 +7,7 @@ import com.github.dimantchick.telegrambot.services.BotUserService;
 import com.github.dimantchick.telegrambot.services.telegram.TelegramExecutorService;
 import com.github.dimantchick.telegrambot.services.telegram.UpdateUtilsService;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static com.github.dimantchick.telegrambot.handlers.callbacks.AcceptAgreementCallbackUpdateHandler.ACCEPT_AGREEMENT;
@@ -48,7 +48,7 @@ public class AgreementServiceImpl implements AgreementService {
         return botUserService.isAgreeLicense(updateUtilsService.getChatId(update))
                 || update.hasCallbackQuery()
                 && (DECLINE_AGREEMENT.equals(update.getCallbackQuery().getData())
-                    || ACCEPT_AGREEMENT.equals(update.getCallbackQuery().getData()));
+                || ACCEPT_AGREEMENT.equals(update.getCallbackQuery().getData()));
     }
 
     @Override
@@ -60,13 +60,13 @@ public class AgreementServiceImpl implements AgreementService {
     }
 
     private void executeAgreementAccept(long chatId, int messageId) {
-        EditMessageText new_message = EditMessageText.builder()
+        EditMessageCaption editMessageCaption = EditMessageCaption.builder()
                 .chatId(chatId)
                 .messageId(messageId)
-                .text("You accepted agreement.")
+                .caption("You accepted this agreement.")
                 .replyMarkup(null)
                 .build();
-        telegramExecutorService.execute(new_message);
+        telegramExecutorService.execute(editMessageCaption);
     }
 
     @Override
@@ -77,13 +77,13 @@ public class AgreementServiceImpl implements AgreementService {
     }
 
     private void executeAgreementDecline(long chatId, int messageId) {
-        EditMessageText new_message = EditMessageText.builder()
+        EditMessageCaption editMessageCaption = EditMessageCaption.builder()
                 .chatId(chatId)
                 .messageId(messageId)
-                .text("You decline agreement and can not use this bot.")
+                .caption("You decline this agreement and can not use this bot.")
                 .replyMarkup(null)
                 .build();
-        telegramExecutorService.execute(new_message);
+        telegramExecutorService.execute(editMessageCaption);
     }
 
     @Override
